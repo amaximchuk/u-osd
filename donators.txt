@@ -1,0 +1,45 @@
+People who have contributed to cl-osd:
+____________________________________________
+
+Tjerk Slaghek
+Anders Petersson
+William Nachefski
+Mark Illum
+Armando Luis Maria Bianchi
+Jerrod Johnson
+Denis Konyashchenko
+Simon Jellinghaus
+David Collett
+Johannes Hermen
+Mark Illum
+Suzanne Spooner
+Laurent Thibaudet
+John Alsbrooks
+M F Hurlock
+Peter Korman
+Alexander Marquis
+Tomislav Reskovic
+Samuel Brucksch
+Gareth Jackson
+Real Dufour
+OrangeRX.co.uk
+
+
+Programmers:
+____________________________________________
+
+Carl Ljungström
+
+Ernani Reis
+Pascal Becker
+David Collett
+Yury Smirnov
+
+
+Special thanks to:
+____________________________________________
+
+Emilie T
+Anders Petersson
+
+

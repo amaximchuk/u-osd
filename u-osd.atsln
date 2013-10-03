@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# AvrStudio Solution File, Format Version 11.00
+Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "u-osd", "u-osd.cproj", "{CFA3045A-60D0-433B-83CF-95995E1F3043}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|AVR = Debug|AVR
+		G-OSD|AVR = G-OSD|AVR
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CFA3045A-60D0-433B-83CF-95995E1F3043}.Debug|AVR.ActiveCfg = Debug|AVR
+		{CFA3045A-60D0-433B-83CF-95995E1F3043}.Debug|AVR.Build.0 = Debug|AVR
+		{CFA3045A-60D0-433B-83CF-95995E1F3043}.G-OSD|AVR.ActiveCfg = G-OSD|AVR
+		{CFA3045A-60D0-433B-83CF-95995E1F3043}.G-OSD|AVR.Build.0 = G-OSD|AVR
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
