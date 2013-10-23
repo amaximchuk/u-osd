@@ -37,7 +37,9 @@ Credit to Carl Ljungström.
 #include "utils.h"
 #include "calcs.h"
 
-#include "gps.h"
+#ifdef GPS_ENABLED
+#	include "gps.h"
+#endif // GPS_ENABLED
 #include "layout.h"
 
 #include "vars.h"
@@ -73,6 +75,7 @@ static void update_time() {
 #endif //TIME_HOUR_ENABLED
 }
 
+__attribute__((unused))
 static void reset_time() {
 	g_time_tick = 0;
 	g_time.sec = 0;
@@ -104,9 +107,11 @@ void main(void) {
 	setup				();
 
 	while (1) {
+#ifdef GPS_ENABLED		
 		if(UCSR0A & (1<<RXC0)) {
 			decode_gps	(UDR0);
 		}
+#endif // GPS_ENABLED		
     
 		if((PIND & KEY) != KEY) {
 			g_key_pressed = 1;

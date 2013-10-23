@@ -29,9 +29,17 @@ Credit to Carl Ljungström.
 // CPU speed
 #define F_CPU 24000000UL
 
+#if defined(G_OSD) || defined(E_OSD_GPS)
+#	define HARDWARE_SUPPORT_GPS
+#endif
+
 //-----------------------------------------------------------------------------
 // MAIN FEATURES 
 #define ALARM_ENABLED
+
+#ifdef HARDWARE_SUPPORT_GPS
+#	define GPS_ENABLED
+#endif // HARDWARE_SUPPORT_GPS
 
 //-----------------------------------------------------------------------------
 // GPS
@@ -116,16 +124,18 @@ Credit to Carl Ljungström.
 // HOME POS
 // Note: Use at least one or you will never get a home pos!
 // Comment out unwanted to disable
-//#define HOME_SET_AT_FIX		// Home position is set when GPS gets satellited fix.
-//#define HOME_AUTO_SET			//Home position is set when a certain speed is exceeded.
-#define HOME_SET_WITH_BUTTON	//Home position is set when the little button on OSD is long pressed.
-//#define HOME_SET_FIX_COUNT 10 //Config for _SET_AT_FIX: After 10 successfully fixes, home is set.
-//#define HOME_FIX_MIN_SPEED 10 //Config for _AUTO_SET: More than 10 km/h sets home.
-//#define HOME_SET_MIN_SATS 4	//Config for _SET_AT_FIX: Set home only when more than 4 satellites. (Thanks to Yury Smirnov)
+#ifdef GPS_ENABLED
+//#	define HOME_SET_AT_FIX		// Home position is set when GPS gets satellited fix.
+//#	define HOME_AUTO_SET			//Home position is set when a certain speed is exceeded.
+#	define HOME_SET_WITH_BUTTON	//Home position is set when the little button on OSD is long pressed.
+//#	define HOME_SET_FIX_COUNT 10 //Config for _SET_AT_FIX: After 10 successfully fixes, home is set.
+//#	define HOME_FIX_MIN_SPEED 10 //Config for _AUTO_SET: More than 10 km/h sets home.
+//#	define HOME_SET_MIN_SATS 4	//Config for _SET_AT_FIX: Set home only when more than 4 satellites. (Thanks to Yury Smirnov)
+#endif // GPS_ENABLED
 
 //-----------------------------------------------------------------------------
 // User data
-#define TEXT_CALL_SIGN "ALEX"	//Set this to your call sign.
+#define TEXT_CALL_SIGN "C-SIGN"	//Set this to your call sign.
 
 //-----------------------------------------------------------------------------
 // Time
@@ -215,8 +225,13 @@ Credit to Carl Ljungström.
 
 //-----------------------------------------------------------------------------
 // HARDWARE
-#define KEY (1<<PD4)
-#define LED (1<<PD3)
+#if defined(E_OSD) || defined(E_OSD_GPS)
+#	define KEY (1<<PD5)
+#	define LED (1<<PD6)
+#else //G_OSD
+#	define KEY (1<<PD4)
+#	define LED (1<<PD3)
+#endif //E_OSD
 
 #define BLACK_OUT PB1
 #define WHITE_OUT PB3
@@ -228,12 +243,25 @@ Credit to Carl Ljungström.
 #define LTRIG_MASK (1<<LTRIG_IN) //INT0
 #define SS_MASK (1<<PB2)
 
+#define OUT1 (1<<PB1)
+#define OUT2 (1<<PB3)
+
+#define LTRIG (1<<PD2) //INT0
+#define SS (1<<PB2)
+
 //-----------------------------------------------------------------------------
 // ADC
-#define ANALOG_IN_1 0 // Voltage 1				= ADC0
-#define ANALOG_IN_2 1 // Voltage 2				= ADC1
-#define ANALOG_IN_3 2 // RSSI / Current Sensor	= ADC2 (0-5 Volt!)
-#define ANALOG_IN_4 3 // unused					= ADC3 (0-5 Volt!)
+#if defined(E_OSD) || defined(E_OSD_GPS)
+#	define ANALOG_IN_1 1 // Voltage 1				= ADC1
+#	define ANALOG_IN_2 0 // Voltage 2				= ADC0 (can be RSSI)
+#	define ANALOG_IN_3 2 // RSSI / Current Sensor	= ADC2 (0-5 Volt!)
+#	define ANALOG_IN_4 3 // unused
+#else //G_OSD
+#	define ANALOG_IN_1 0 // Voltage 1				= ADC0
+#	define ANALOG_IN_2 1 // Voltage 2				= ADC1
+#	define ANALOG_IN_3 2 // RSSI / Current Sensor	= ADC2 (0-5 Volt!)
+#	define ANALOG_IN_4 3 // unused
+#endif
 
 #define ADC_OFFSET 0
 #define ANALOG_IN_SCALE 31,31,5,5
@@ -248,6 +276,14 @@ Credit to Carl Ljungström.
 
 #if (defined(SENSOR_VOLTAGE_2_ENABLED) && (ANALOG_IN_NUMBER <= 2) && defined(SENSOR_RSSI_ENABLED))
 #	error "Can't use both RSSI and voltage 2 at the same time on this board."
+#endif
+
+// ----------- CHECK SANITY --------------
+#if (defined(E_OSD) && (defined(E_OSD_GPS) || defined(G_OSD))) \
+ || (defined(G_OSD) && (defined(E_OSD_GPS) || defined(E_OSD))) \
+ || (defined(E_OSD_GPS) && (defined(E_OSD) || defined(G_OSD))) \
+ || (!defined(E_OSD) && !defined(E_OSD_GPS) && !defined(G_OSD))
+#	error "Select one and only one target!"
 #endif
 
 #endif /* CONFIG_H_ */

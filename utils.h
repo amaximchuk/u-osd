@@ -93,12 +93,12 @@ static u8 sz_len(const char *s) {
     return s - start;
 }
 
-__attribute__((noinline))
+__attribute__((noinline,unused))
 static void sz_clear(pstr dst, u8 len) {
 	memset(dst,0,len);
 }	
 
-__attribute__((noinline))
+__attribute__((noinline,unused))
 static BOOL sz_ncmpb(pcstr dst, pcstr src, u8 len) {
 	pcstr end = dst + len;
 	while (dst < end)
@@ -314,6 +314,7 @@ static u8 div_bf(u16 val, u8 divider) { // brute force
 	return		res;
 }	
 
+__attribute__((unused))
 static s16 parse_int(pcstr text, u8 maxLength, u8 frac) {
 	pcstr ptr		= text;
 	pcstr ptr_end	= text + maxLength;
@@ -360,6 +361,7 @@ static s32 parseFloat(const char* const text, u8 maxLength) {
 }
 */
 
+__attribute__((unused))
 static u8 parse_hex(pcstr text, u8 maxLength) {
 	u8 val			= 0;
 	pcstr ptr		= text;
@@ -421,24 +423,26 @@ static s32 nmea_to_sec100(const TGpsCoord *coord) {
 }
 
 #ifdef IMPERIAL_SYSTEM
+__attribute__((unused))
 static s16 meter_to_feet(s32 v) {
 	v			*= 3281;
 	v			/= 1000;
 	return		v;
 }
-
+__attribute__((unused))
 static u16 knot_to_mph(u32 v) {
 	v			*= 1151;
 	v			/= 1000;
 	return		v;
 }
-
+__attribute__((unused))
 static u16 kmph_to_mph(u32 v) {
 	v			*= 621;
 	v			/= 1000;
 	return		v;
 }
 #else 
+__attribute__((unused))
 static u16 knot_to_kmph(u32 v) {
 	v			*= 463;
 	v			/= 250;
@@ -446,7 +450,7 @@ static u16 knot_to_kmph(u32 v) {
 }
 #endif //IMPERIAL_SYSTEM
 
-__attribute__((noinline))
+__attribute__((noinline,unused))
 static void parse_gps_coord(TGpsCoord *coord, const char* const text, u16 corr) {
 	u8		h, m, n	= 0; 
 	u16		dm	= 0;
