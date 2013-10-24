@@ -357,7 +357,7 @@ static void update_layout() {
 static void draw_line(u8 row, u8 line)
 {	
 	// 1185 cycles
-	_delay_us			(0.7);
+	_delay_us			(LINE_DELAY);
 	pcstr str			= g_text_rows[row].str;
 	u16 line_offs		= (u16)oem6x8 + CHAR_LENGTH * line;
 	
@@ -378,14 +378,16 @@ static void draw_line(u8 row, u8 line)
 		} else {
 			sh			= FALSE;
 			out			= 0;
-			DELAY_9_NOP();
+			DELAY_9_NOP	();
 		}				
 		if (sh)			{	BIT_SET(DDRB, BLACK_OUT);					}
 		else			{	BIT_CLEAR(DDRB, BLACK_OUT);	DELAY_1_NOP();	}
 		SPDR			= out;
 
-		DELAY_9_NOP	();
+		DELAY_9_NOP		();
+#ifdef COLORSYSTEM_NTSC
 		DELAY_1_NOP		();
+#endif
 //		DELAY_1_NOP		();
 	} while (--it);					
 	DELAY_10_NOP		();
@@ -395,11 +397,18 @@ static void draw_line(u8 row, u8 line)
 }
 
 static void update_line() {
-	_delay_us(4.5);					// wait 4.5 us to see if H or V sync
+	_delay_us			(4.5);		// wait 4.5 us to see if H or V sync
 	if(!BIT_TEST(PIND, LTRIG_IN)) { // H sync
-		u8 rnum		= g_text_row;
+		// skip first N lines
+		u8 line			= g_skip_line;
+		if (++line <= SKIP_LINES) {
+			g_skip_line	= line;
+			return;
+		}			
+
+		u8 rnum			= g_text_row;
 		if (rnum < TEXT_ROWS) {
-			u8 line		= g_active_line;
+			line		= g_active_line;
 			u8 r_line	= g_text_rows[rnum].line;
 			u8 l_end	= r_line + TEXT_CHAR_HEIGHT;
 			if (line >= r_line && line < l_end) {
@@ -409,6 +418,7 @@ static void update_line() {
 			line++;
 			if (line == 255)	line--;
 			if (line == l_end)	rnum++;
+			
 			g_text_row		= rnum;
 			g_active_line	= line;
 		
@@ -416,8 +426,9 @@ static void update_line() {
 				g_frame_sync = 1;
 		}
 	} else { // V sync
-		if(g_active_line > 200) {
+		if (g_active_line > 200) {
 			g_active_line	= 0;
+			g_skip_line		= 0;
 			g_text_row		= 0;
 		}
 	}

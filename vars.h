@@ -86,29 +86,52 @@ static u8				g_home_fix_count	= 0;
 // Text & Layout
 static volatile u8		g_frame_sync		= 0;
 static u8				g_active_line		= 0;
+static u8				g_skip_line			= 0;
 
 // rows
 static u8				g_text_row;
 static str_row			g_text_rows[TEXT_ROWS] = { 
-	{25,	""},
-	{37,	""},
+#ifdef COLORSYSTEM_NTSC
+	{0,		""},
+	{12,	""},
 		
-	{82,	""},
-	{90,	""},
-	{98,	""},
-	{106,	""},
-	{114,	""},
-	{122,	""},
-	{130,	""},
-	{138,	""},
-	{146,	""},
-	{154,	""},
-	{162,	""},
-	{170,	""},
+	{TEXT_RADAR_LINE-6*8,	""},
+	{TEXT_RADAR_LINE-5*8,	""},
+	{TEXT_RADAR_LINE-4*8,	""},
+	{TEXT_RADAR_LINE-3*8,	""},
+	{TEXT_RADAR_LINE-2*8,	""},
+	{TEXT_RADAR_LINE-1*8,	""},
+	{TEXT_RADAR_LINE+0*8,	""},
+	{TEXT_RADAR_LINE+1*8,	""},
+	{TEXT_RADAR_LINE+2*8,	""},
+	{TEXT_RADAR_LINE+3*8,	""},
+	{TEXT_RADAR_LINE+4*8,	""},
+	{TEXT_RADAR_LINE+5*8,	""},
 		
-	{216,	""},
-	{228,	""},
-	{240,	""},
+	{191,	""},
+	{203,	""},
+	{215,	""},
+#else // PAL
+	{0,		""},
+	{12,	""},
+		
+	{TEXT_RADAR_LINE-6*8,	""},
+	{TEXT_RADAR_LINE-5*8,	""},
+	{TEXT_RADAR_LINE-4*8,	""},
+	{TEXT_RADAR_LINE-3*8,	""},
+	{TEXT_RADAR_LINE-2*8,	""},
+	{TEXT_RADAR_LINE-1*8,	""},
+	{TEXT_RADAR_LINE+0*8,	""},
+	{TEXT_RADAR_LINE+1*8,	""},
+	{TEXT_RADAR_LINE+2*8,	""},
+	{TEXT_RADAR_LINE+3*8,	""},
+	{TEXT_RADAR_LINE+4*8,	""},
+	{TEXT_RADAR_LINE+5*8,	""},
+		
+	{222,	""},
+	{234,	""},
+	{246,	""},
+#endif 
 };	
 
 static str_text			g_text_sign				= {{0,	1	},	{16,1}};

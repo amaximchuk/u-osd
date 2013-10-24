@@ -96,22 +96,22 @@ Credit to Carl Ljungström.
 #ifdef SENSOR_RSSI_ENABLED
 #	define RSSI_INPUT ANALOG_IN_4
 #	define RSSI_MAX_VOLTAGE 5.0		//(Max two digits after the dot)
-#	define RSSI_MIN_VOLTAGE 1.2
+#	define RSSI_MIN_VOLTAGE 1.5
 #	define RSSI_REVERSED 0			// If a low voltage value means high signal strength and vice versa, then enable this. (Thanks BlueAngel2000)
 #endif //SENSOR_RSSI_ENABLED
 
 // Compass sensor
 #ifdef SENSOR_COMPASS_ENABLED
 #	define COMPASS_INPUT ANALOG_IN_2
-#	define COMPASS_MIN_VOLTAGE 0.00 //(Max two digits after the dot)
 #	define COMPASS_MAX_VOLTAGE 5.00
+#	define COMPASS_MIN_VOLTAGE 0.00 //(Max two digits after the dot)
 #endif
 
 // Current sensor 
 #ifdef SENSOR_CURRENT_ENABLED
 #	define CURRENT_INPUT ANALOG_IN_3
-#	define CURRENT_MIN_VOLTAGE 0.00 //(Max two digits after the dot)
 #	define CURRENT_MAX_VOLTAGE 5.00
+#	define CURRENT_MIN_VOLTAGE 0.00 //(Max two digits after the dot)
 #	define CURRENT_MAX_AMPS 38 //AMP
 #endif
 
@@ -135,34 +135,24 @@ Credit to Carl Ljungström.
 
 //-----------------------------------------------------------------------------
 // User data
-#define TEXT_CALL_SIGN "C-SIGN"	//Set this to your call sign.
+#define TEXT_CALL_SIGN			""	//Set this to your call sign.
 
 //-----------------------------------------------------------------------------
 // Time
-//#define TIME_HOUR_ENABLED		//Enable time to show and count hours.
+//#define TIME_HOUR_ENABLED			//Enable time to show and count hours.
 
 //-----------------------------------------------------------------------------
 // Color System
-#define COLORSYSTEM_NTSC
-
-#ifdef COLORSYSTEM_NTSC
-#	define TIME_FRAMES_PER_SEC 60
-#else //PAL
-#	define TIME_FRAMES_PER_SEC 50
-#endif
+//#define COLORSYSTEM_NTSC
 
 //-----------------------------------------------------------------------------
 // Screen and sensor refresh rate
-#define SCREEN_UPDATES_PER_SEC 10
-#define SENSOR_UPDATES_PER_SEC 1
+#define SCREEN_UPDATES_PER_SEC	10
+#define SENSOR_UPDATES_PER_SEC	1
 
-// ----------- TEXT --------------
-#ifdef COLORSYSTEM_NTSC
-#	define TEXT_ROW_MAX_CHARS 35
-#else	// PAL
-#	define TEXT_ROW_MAX_CHARS 33
-#endif	// COLORSYSTEM_NTSC
-
+//-----------------------------------------------------------------------------
+// Layout & text
+#define TEXT_ROW_MAX_CHARS		35
 #define TEXT_CHAR_HEIGHT		8
 
 #define TEXT_ROWS				17
@@ -175,26 +165,26 @@ Credit to Carl Ljungström.
 #define TEXT_RADAR_DIST_4		200
 #define TEXT_RADAR_DIST_5		500
 
-//-----------------------------------------------------------------------------
-// UPDATE LINE
-#define MAX(a, b)  (((a) > (b)) ? (a) : (b))
 #ifdef COLORSYSTEM_NTSC
-#	define FRAME_SYNC_LINE 170
+#	define TEXT_RADAR_LINE		120
+#	define TIME_FRAMES_PER_SEC	60
+#	define SKIP_LINES			25
+#	define LINE_DELAY			0.7
+#	define FRAME_SYNC_LINE		170
 #else //PAL
-#	define FRAME_SYNC_LINE 110
+#	define TEXT_RADAR_LINE		130
+#	define TIME_FRAMES_PER_SEC	50
+#	define SKIP_LINES			35
+#	define LINE_DELAY			1.9
+#	define FRAME_SYNC_LINE		170
 #endif //COLORSYSTEM_NTSC
 
-//-----------------------------------------------------------------------------
-// TEXT UNITS
+// text units
 #ifdef METRIC_SYSTEM
 #	define TEXT_LENGTH_UNIT 'm'
+#	define TEXT_SPEED_UNIT "KM/H"
 #else
 #	define TEXT_LENGTH_UNIT 'F'
-#endif //METRIC_SYSTEM
-
-#ifdef METRIC_SYSTEM
-#	define TEXT_SPEED_UNIT "KM/H"
-#else 
 #	define TEXT_SPEED_UNIT "MPH"
 #endif //METRIC_SYSTEM
 
