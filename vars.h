@@ -137,24 +137,33 @@ static str_row			g_text_rows[TEXT_ROWS] = {
 static str_text			g_text_sign				= {{0,	1	},	{16,1}};
 static str_text			g_text_volt1			= {{0,	14	},	{7,	1}};
 static str_text			g_text_volt2			= {{0,	15	},	{7,	1}};
-static str_text			g_text_current			= {{27,	14	},	{7,	1}};
-static str_text			g_text_power_usage		= {{27,	15	},	{8,	1}};
 static str_text			g_text_time				= {{0,	0	},	{6,	1}};
 static str_text			g_text_alt				= {{30,	8	},	{5,	1}};
 static str_text			g_text_speed			= {{1,	8	},	{4,	1}};
 static str_text			g_text_lat				= {{0,	16	},	{11,1}};
 static str_text			g_text_lon				= {{23,	16	},	{12,1}};
-static str_text			g_text_rssi				= {{31,	0	},	{4,	1}};
-static str_text			g_text_sat				= {{31,	1	},	{4,	1}};
+static str_text			g_text_sat				= {{31,	0	},	{4,	1}};
 static str_text			g_text_bear_to_home		= {{15,	15	},	{5,	1}};
 static str_text			g_text_dist_to_home		= {{15,	16	},	{6,	1}};
-static str_text			g_text_stat_max_speed	= {{1,	2	},	{3,	1}};
-static str_text			g_text_stat_max_dist	= {{21,	0	},	{7,	1}};
-static str_text			g_text_stat_trip		= {{8,	0	},	{7,	1}};
-static str_text			g_text_stat_max_alt		= {{31,	2	},	{4,	1}};
 static str_scale		g_text_speed_scale		= {{5,	2	},	0};
 static str_scale		g_text_alt_scale		= {{29,	2	},	0};
 static str_radar		g_text_radar			= {{17,	8	},	{15,8}};
 static str_text			g_text_home				= {{17,	14	},	{1,	1}};
+
+#ifdef SENSOR_RSSI_ENABLED
+	static str_text		g_text_rssi				= {{31,	1	},	{4,	1}};
+#endif // SENSOR_RSSI_ENABLED
+
+#ifdef STATS_ENABLED
+	static str_text		g_text_stat_max_speed	= {{1,	2	},	{3,	1}};
+	static str_text		g_text_stat_max_dist	= {{21,	0	},	{7,	1}};
+	static str_text		g_text_stat_trip		= {{8,	0	},	{7,	1}};
+	static str_text		g_text_stat_max_alt		= {{31,	2	},	{4,	1}};
+#endif // STATS_ENABLED
+
+#ifdef SENSOR_CURRENT_ENABLED
+	static str_text		g_text_current			= {{27,	14	},	{7,	1}};
+	static str_text		g_text_power_usage		= {{27,	15	},	{8,	1}};
+#endif // SENSOR_CURRENT_ENABLED
 
 #endif /* VARS_H_ */

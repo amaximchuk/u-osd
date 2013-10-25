@@ -33,7 +33,7 @@ static void calc_adc(TAnalogValue *r, u8 input) {
 	r->low		= low;
 }
 
-__attribute__((noinline))
+__attribute__((noinline,unused))
 static u16 calc_level(u8 input, u16 in_min, u16 in_max, u16 out_min, u16 out_max, BOOL reversed) {
 	TAnalogValue v; calc_adc(&v, input);
 	u32 level	= v.high * 100 + v.low;
@@ -63,7 +63,6 @@ static void update_sensors() {
 	g_sensor_power_usage	+= (((u32)(curr) * 10 << 10) / SENSOR_UPDATES_PER_SEC / 3600);
 	g_sensor_current.high	= curr / 100;
 	g_sensor_current.low	= (curr - (g_sensor_current.high * 100));
-	//g_sensor_rssi	= g_adc_raw[0];
 #endif		// SENSOR_CURRENT_ENABLED
 
 #ifdef SENSOR_BATTERY_PERCENTAGE_ENABLED

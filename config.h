@@ -27,6 +27,7 @@ Credit to Carl Ljungström.
 
 //-----------------------------------------------------------------------------
 // CPU speed
+//-----------------------------------------------------------------------------
 #define F_CPU 24000000UL
 
 #if defined(G_OSD) || defined(E_OSD_GPS)
@@ -35,19 +36,27 @@ Credit to Carl Ljungström.
 
 //-----------------------------------------------------------------------------
 // MAIN FEATURES 
-#define ALARM_ENABLED
-
+//-----------------------------------------------------------------------------
 #ifdef HARDWARE_SUPPORT_GPS
 #	define GPS_ENABLED
 #endif // HARDWARE_SUPPORT_GPS
+#define ALARM_ENABLED
+//#define SENSOR_BATTERY_PERCENTAGE_ENABLED
+#define SENSOR_RSSI_ENABLED
+//#define SENSOR_COMPASS_ENABLED
+#define SENSOR_CURRENT_ENABLED
+#define STATS_ENABLED
 
 //-----------------------------------------------------------------------------
-// GPS
-// select only one GPS sensor
+// GPS - select only one GPS sensor
+//-----------------------------------------------------------------------------
 #define GPS_MTK3229
-//#	define GPS_NEO6M
-//#	define GPS_GOSDII
+//#define GPS_NEO6M
+//#define GPS_GOSDII
 
+//-----------------------------------------------------------------------------
+// GPS messages type (by default NMEA)
+//-----------------------------------------------------------------------------
 //#define GPS_DIYD //Use DIYD/APM binary protocol (Thanks to David Collett)
 
 #define GPS_MAX_CHARS 16
@@ -66,8 +75,8 @@ Credit to Carl Ljungström.
 #define GPS_UBRR (F_CPU/16/GPS_BAUD-1)
 
 //-----------------------------------------------------------------------------
-// ALARMS
-// Alarms (Comment to disable)
+// ALARMS - Comment to disable
+//-----------------------------------------------------------------------------
 #define ALARM_BATT1_LOW 7.50		//Warn if below this level (in volt)
 #define ALARM_BATT2_LOW 7.50		//Warn if below this level (in volt)
 #define ALARM_RSSI_LOW 50			//Warn if below this level (in %)
@@ -78,12 +87,7 @@ Credit to Carl Ljungström.
 
 //-----------------------------------------------------------------------------
 // SENSORS
-// Enabled sensors
-//#define SENSOR_BATTERY_PERCENTAGE_ENABLED
-#define SENSOR_RSSI_ENABLED
-//#define SENSOR_COMPASS_ENABLED
-#define SENSOR_CURRENT_ENABLED
-
+//-----------------------------------------------------------------------------
 // Battery percentage sensor
 #ifdef SENSOR_BATTERY_PERCENTAGE_ENABLED
 #	define SENSOR_BATTERY_PERCENTAGE_INPUT ANALOG_IN_1
@@ -116,14 +120,13 @@ Credit to Carl Ljungström.
 #endif
 
 //-----------------------------------------------------------------------------
-// Unit system
+// Unit system - by default meter system (m, km/h)
+//-----------------------------------------------------------------------------
 //#define IMPERIAL_SYSTEM		//Feet, mph etc...
-#define METRIC_SYSTEM			//Meter, hm/h etc...
 
 //-----------------------------------------------------------------------------
-// HOME POS
-// Note: Use at least one or you will never get a home pos!
-// Comment out unwanted to disable
+// HOME POS - Use at least one or you will never get a home pos! Comment out unwanted to disable
+//-----------------------------------------------------------------------------
 #ifdef GPS_ENABLED
 //#	define HOME_SET_AT_FIX		// Home position is set when GPS gets satellited fix.
 //#	define HOME_AUTO_SET			//Home position is set when a certain speed is exceeded.
@@ -135,23 +138,28 @@ Credit to Carl Ljungström.
 
 //-----------------------------------------------------------------------------
 // User data
+//-----------------------------------------------------------------------------
 #define TEXT_CALL_SIGN			""	//Set this to your call sign.
 
 //-----------------------------------------------------------------------------
 // Time
+//-----------------------------------------------------------------------------
 //#define TIME_HOUR_ENABLED			//Enable time to show and count hours.
 
 //-----------------------------------------------------------------------------
 // Color System
-//#define COLORSYSTEM_NTSC
+//-----------------------------------------------------------------------------
+#define COLORSYSTEM_NTSC
 
 //-----------------------------------------------------------------------------
 // Screen and sensor refresh rate
+//-----------------------------------------------------------------------------
 #define SCREEN_UPDATES_PER_SEC	10
 #define SENSOR_UPDATES_PER_SEC	1
 
 //-----------------------------------------------------------------------------
 // Layout & text
+//-----------------------------------------------------------------------------
 #define TEXT_ROW_MAX_CHARS		35
 #define TEXT_CHAR_HEIGHT		8
 
@@ -179,42 +187,20 @@ Credit to Carl Ljungström.
 #	define FRAME_SYNC_LINE		170
 #endif //COLORSYSTEM_NTSC
 
+//-----------------------------------------------------------------------------
 // text units
-#ifdef METRIC_SYSTEM
-#	define TEXT_LENGTH_UNIT 'm'
-#	define TEXT_SPEED_UNIT "KM/H"
-#else
+//-----------------------------------------------------------------------------
+#ifdef IMPERIAL_SYSTEM
 #	define TEXT_LENGTH_UNIT 'F'
 #	define TEXT_SPEED_UNIT "MPH"
-#endif //METRIC_SYSTEM
-
-//-----------------------------------------------------------------------------
-// SENSORS
-// Battery
-#define BATT_MIN_VOLTAGE SENSOR_CELL_LOW_VOLTAGE*SENSOR_CELL_COUNT
-#define BATT_MAX_VOLTAGE SENSOR_CELL_HIGH_VOLTAGE*SENSOR_CELL_COUNT
-#define BATT_MIN_VOLTAGE_INT (u16)(BATT_MIN_VOLTAGE*100)
-#define BATT_MAX_VOLTAGE_INT (u16)(BATT_MAX_VOLTAGE*100)
-
-// RSSI conversion
-#define RSSI_MIN_VOLTAGE_INT (u16)(RSSI_MIN_VOLTAGE*100)
-#define RSSI_MAX_VOLTAGE_INT (u16)(RSSI_MAX_VOLTAGE*100)
-
-// Compass
-#define COMPASS_MIN_VOLTAGE_INT (u16)(COMPASS_MIN_VOLTAGE*100)
-#define COMPASS_MAX_VOLTAGE_INT (u16)(COMPASS_MAX_VOLTAGE*100)
-
-// Current sensor
-#define CURRENT_MIN_VOLTAGE_INT (u16)(CURRENT_MIN_VOLTAGE*100)
-#define CURRENT_MAX_VOLTAGE_INT (u16)(CURRENT_MAX_VOLTAGE*100)
-#define CURRENT_MAX_AMPS_INT	(u16)(CURRENT_MAX_AMPS*100)
-
-// Alarm conversion
-#define ALARM_BATT1_LOW_INT (u16)(ALARM_BATT1_LOW*100)
-#define ALARM_BATT2_LOW_INT (u16)(ALARM_BATT2_LOW*100)
+#else
+#	define TEXT_LENGTH_UNIT 'm'
+#	define TEXT_SPEED_UNIT "KM/H"
+#endif //IMPERIAL_SYSTEM
 
 //-----------------------------------------------------------------------------
 // HARDWARE
+//-----------------------------------------------------------------------------
 #if defined(E_OSD) || defined(E_OSD_GPS)
 #	define KEY (1<<PD5)
 #	define LED (1<<PD6)
@@ -241,6 +227,7 @@ Credit to Carl Ljungström.
 
 //-----------------------------------------------------------------------------
 // ADC
+//-----------------------------------------------------------------------------
 #if defined(E_OSD) || defined(E_OSD_GPS)
 #	define ANALOG_IN_1 1 // Voltage 1				= ADC1
 #	define ANALOG_IN_2 0 // Voltage 2				= ADC0 (can be RSSI)
@@ -259,16 +246,38 @@ Credit to Carl Ljungström.
 #define ANALOG_IN_NUMBERS 4
 
 //-----------------------------------------------------------------------------
-// SANITY CHECK 
-#if (defined(IMPERIAL_SYSTEM) && defined(METRIC_SYSTEM)) || (!defined(IMPERIAL_SYSTEM) && !defined(METRIC_SYSTEM))
-#	error "Select one and only one unit system!"
-#endif
+// Precalculate limits
+//-----------------------------------------------------------------------------
+// Battery
+#define BATT_MIN_VOLTAGE SENSOR_CELL_LOW_VOLTAGE*SENSOR_CELL_COUNT
+#define BATT_MAX_VOLTAGE SENSOR_CELL_HIGH_VOLTAGE*SENSOR_CELL_COUNT
+#define BATT_MIN_VOLTAGE_INT (u16)(BATT_MIN_VOLTAGE*100)
+#define BATT_MAX_VOLTAGE_INT (u16)(BATT_MAX_VOLTAGE*100)
 
+// RSSI conversion
+#define RSSI_MIN_VOLTAGE_INT (u16)(RSSI_MIN_VOLTAGE*100)
+#define RSSI_MAX_VOLTAGE_INT (u16)(RSSI_MAX_VOLTAGE*100)
+
+// Compass
+#define COMPASS_MIN_VOLTAGE_INT (u16)(COMPASS_MIN_VOLTAGE*100)
+#define COMPASS_MAX_VOLTAGE_INT (u16)(COMPASS_MAX_VOLTAGE*100)
+
+// Current sensor
+#define CURRENT_MIN_VOLTAGE_INT (u16)(CURRENT_MIN_VOLTAGE*100)
+#define CURRENT_MAX_VOLTAGE_INT (u16)(CURRENT_MAX_VOLTAGE*100)
+#define CURRENT_MAX_AMPS_INT	(u16)(CURRENT_MAX_AMPS*100)
+
+// Alarm conversion
+#define ALARM_BATT1_LOW_INT (u16)(ALARM_BATT1_LOW*100)
+#define ALARM_BATT2_LOW_INT (u16)(ALARM_BATT2_LOW*100)
+
+//-----------------------------------------------------------------------------
+// SANITY CHECK 
+//-----------------------------------------------------------------------------
 #if (defined(SENSOR_VOLTAGE_2_ENABLED) && (ANALOG_IN_NUMBER <= 2) && defined(SENSOR_RSSI_ENABLED))
 #	error "Can't use both RSSI and voltage 2 at the same time on this board."
 #endif
 
-// ----------- CHECK SANITY --------------
 #if (defined(E_OSD) && (defined(E_OSD_GPS) || defined(G_OSD))) \
  || (defined(G_OSD) && (defined(E_OSD_GPS) || defined(E_OSD))) \
  || (defined(E_OSD_GPS) && (defined(E_OSD) || defined(G_OSD))) \

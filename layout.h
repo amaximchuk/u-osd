@@ -293,7 +293,9 @@ static void update_layout() {
 	u8 aDistToHome	= (g_home_distance > ALARM_DISTANCE_HIGH);
 	u8 aBatt1		= g_sensor_voltage1.high&& (((g_sensor_voltage1.high * 100) + g_sensor_voltage1.low) < ALARM_BATT1_LOW_INT);
 	u8 aBatt2		= g_sensor_voltage2.high&& (((g_sensor_voltage2.high * 100) + g_sensor_voltage2.low) < ALARM_BATT2_LOW_INT);
+#ifdef SENSOR_RSSI_ENABLED
 	u8 aRssi		= g_sensor_rssi			&& (g_sensor_rssi < ALARM_RSSI_LOW);
+#endif // SENSOR_RSSI_ENABLED
 	
 	// print values
 	print_float		(&g_text_time,	g_time.min, 3,2, g_time.sec, 2,2, 0, 0, ':');
@@ -312,9 +314,12 @@ static void update_layout() {
 	else					str_fill	(&g_text_volt1, ' ');
 	if (!aBatt2 || blink) 	print_float	(&g_text_volt2, g_sensor_voltage2.high, 2, 1, g_sensor_voltage2.low, 2, 2, 0x2B, 'V', '.');
 	else					str_fill	(&g_text_volt2, ' ');
+#ifdef SENSOR_RSSI_ENABLED
 	if (!aRssi || blink)	print_decimal(&g_text_rssi,g_sensor_rssi, 2, 0x40, '%');
 	else					str_fill	(&g_text_rssi, ' ');
+#endif // SENSOR_RSSI_ENABLED
 
+#ifdef SENSOR_CURRENT_ENABLED
 	print_float		(&g_text_current,			g_sensor_current.high, 2, 1, g_sensor_current.low, 2, 2, 0x3D, 'A', '.');	
 	{
 		pstr str	=		print_decimal	(&g_text_power_usage, g_sensor_power_usage >> 10,	4,	0x3D, 'm');	
@@ -322,11 +327,14 @@ static void update_layout() {
 		*str++		= sh | 'A';
 		*str++		= sh | 'h';
 	}
+#endif // SENSOR_CURRENT_ENABLED
 	
+#ifdef STATS_ENABLED
 	print_decimal	(&g_text_stat_max_speed,	g_stat_max_speed,		3, 0, 0);
 	print_decimal	(&g_text_stat_max_alt,		g_stat_max_altitude,	4, 0, 0);
 	print_decimal	(&g_text_stat_trip,			g_stat_dist_traveled,	4, 0x69,TEXT_LENGTH_UNIT);
 	print_decimal	(&g_text_stat_max_dist,		g_stat_max_distance,	4, 0x6A,TEXT_LENGTH_UNIT);
+#endif // STATS_ENABLED
 	
 	// dbg
 #ifdef DEBUG_TEXT

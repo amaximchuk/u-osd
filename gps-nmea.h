@@ -129,7 +129,7 @@ static void parse_gps_part() {
 				break;
 			case GPS_PART_GPRMC_SPEED: {
 				u16 speed	= parse_int(g_gps_text, GPS_MAX_CHARS, 1); // Only use int part
-#ifdef METRIC_SYSTEM
+#ifndef IMPERIAL_SYSTEM
 #	ifdef GPS_GOSDII	//BUG fix for GOSDII GPS (gps unit sends km/h instead of knots)
 				g_gps_data.speed = speed / 10;
 #	else
@@ -142,7 +142,7 @@ static void parse_gps_part() {
 #	else
 				g_gps_data.speed = kmph_to_mph(speed) / 10;
 #	endif
-#endif // METRIC_SYSTEM
+#endif
 				} break;
 			case GPS_PART_GPRMC_ANGLE:
 				g_gps_data.angle = parse_int(g_gps_text, GPS_MAX_CHARS, 0); // Only use int part
