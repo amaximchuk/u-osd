@@ -14,8 +14,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-
-Credit to Carl Ljungström.
 */
 
 #ifndef SENSORS_H_
@@ -81,7 +79,7 @@ static void update_sensors() {
 static void measure_analog() {
 	for (u8 i = 0; i < ANALOG_IN_NUMBERS; ++i) {
 		ADMUX		&= 0xF0;					// Clear mux
-		ADMUX		|= (i + ADC_OFFSET);		// Setup adc mux
+		ADMUX		|= i;						// Setup adc mux
 		ADCSRA		|= (1<<ADEN) | (1<<ADATE);	// ADC enable & ADC auto trigger enable
 		ADCSRA		|= (1<<ADSC);				// Start measure
 		while ((ADCSRA & (1<<ADIF)) == 0);		// Wait to finish

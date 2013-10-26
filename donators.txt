@@ -1,3 +1,15 @@
+Special thanks to:
+____________________________________________
+
+Carl Ljungström.
+
+
+Programmers:
+____________________________________________
+
+Alexander Maximchuk
+
+
 People who have contributed to cl-osd:
 ____________________________________________
 
@@ -24,7 +36,6 @@ Gareth Jackson
 Real Dufour
 OrangeRX.co.uk
 
-
 Programmers:
 ____________________________________________
 
@@ -34,7 +45,6 @@ Ernani Reis
 Pascal Becker
 David Collett
 Yury Smirnov
-
 
 Special thanks to:
 ____________________________________________

@@ -14,8 +14,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-
-Credit to Carl Ljungström.
 */
 
 #ifndef VARS_H_
@@ -142,7 +140,7 @@ static str_text			g_text_alt				= {{30,	8	},	{5,	1}};
 static str_text			g_text_speed			= {{1,	8	},	{4,	1}};
 static str_text			g_text_lat				= {{0,	16	},	{11,1}};
 static str_text			g_text_lon				= {{23,	16	},	{12,1}};
-static str_text			g_text_sat				= {{31,	0	},	{4,	1}};
+static str_text			g_text_sat				= {{30,	0	},	{4,	1}};
 static str_text			g_text_bear_to_home		= {{15,	15	},	{5,	1}};
 static str_text			g_text_dist_to_home		= {{15,	16	},	{6,	1}};
 static str_scale		g_text_speed_scale		= {{5,	2	},	0};
@@ -151,7 +149,7 @@ static str_radar		g_text_radar			= {{17,	8	},	{15,8}};
 static str_text			g_text_home				= {{17,	14	},	{1,	1}};
 
 #ifdef SENSOR_RSSI_ENABLED
-	static str_text		g_text_rssi				= {{31,	1	},	{4,	1}};
+	static str_text		g_text_rssi				= {{30,	1	},	{5,	1}};
 #endif // SENSOR_RSSI_ENABLED
 
 #ifdef STATS_ENABLED

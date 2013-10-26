@@ -14,8 +14,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-
-Credit to Carl Ljungström.
 */
 
 #include <string.h>
@@ -40,13 +38,12 @@ Credit to Carl Ljungström.
 #ifdef GPS_ENABLED
 #	include "gps.h"
 #endif // GPS_ENABLED
+
 #include "layout.h"
 
 #include "vars.h"
 #include "setup.h"
 #include "sensors.h"
-
-#include "dbg_test.h"
 
 static void update_time() {
 	++g_time_tick;

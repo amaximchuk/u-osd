@@ -14,8 +14,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-
-Credit to Carl Ljungström.
 */
 
 #ifndef CONFIG_H_
@@ -42,9 +40,9 @@ Credit to Carl Ljungström.
 #endif // HARDWARE_SUPPORT_GPS
 #define ALARM_ENABLED
 //#define SENSOR_BATTERY_PERCENTAGE_ENABLED
-#define SENSOR_RSSI_ENABLED
 //#define SENSOR_COMPASS_ENABLED
-#define SENSOR_CURRENT_ENABLED
+#define SENSOR_RSSI_ENABLED
+//#define SENSOR_CURRENT_ENABLED
 #define STATS_ENABLED
 
 //-----------------------------------------------------------------------------
@@ -67,9 +65,9 @@ Credit to Carl Ljungström.
 #	define GPS_CORR_DM_LON 0 
 #else
 #	define GPS_BAUD 4800
-//	Local calibration in decimal part of Minutes (only +)
-#	define GPS_CORR_DM_LAT 2139 
-#	define GPS_CORR_DM_LON 4337 
+//	Local calibration in decimal part of Minutes (individually & only +)
+#	define GPS_CORR_DM_LAT 0 // my values = 2139 
+#	define GPS_CORR_DM_LON 0 // my values = 4337 
 #endif
 
 #define GPS_UBRR (F_CPU/16/GPS_BAUD-1)
@@ -86,6 +84,24 @@ Credit to Carl Ljungström.
 #define ALARM_DISTANCE_HIGH 2000	//Warn if below this level (in meters/feet)
 
 //-----------------------------------------------------------------------------
+// ADC
+//-----------------------------------------------------------------------------
+#if defined(E_OSD) || defined(E_OSD_GPS)
+#	define ANALOG_IN_1 1 // Voltage 1				= ADC1
+#	define ANALOG_IN_2 0 // Voltage 2				= ADC0 (can be RSSI)
+#	define ANALOG_IN_3 2 // RSSI / Current Sensor	= ADC2 (0-5 Volt!)
+#	define ANALOG_IN_4 3 // unused
+#else //G_OSD
+#	define ANALOG_IN_1 0 // Voltage 1				= ADC0
+#	define ANALOG_IN_2 1 // Voltage 2				= ADC1
+#	define ANALOG_IN_3 2 // RSSI / Current Sensor	= ADC2 (0-5 Volt!)
+#	define ANALOG_IN_4 3 // unused
+#endif
+
+#define ANALOG_IN_SCALE 31,31,5,5
+#define ANALOG_IN_NUMBERS 4
+
+//-----------------------------------------------------------------------------
 // SENSORS
 //-----------------------------------------------------------------------------
 // Battery percentage sensor
@@ -98,7 +114,11 @@ Credit to Carl Ljungström.
 
 // RSSI sensor
 #ifdef SENSOR_RSSI_ENABLED
-#	define RSSI_INPUT ANALOG_IN_4
+#	if defined(E_OSD) || defined(E_OSD_GPS)
+#		define RSSI_INPUT ANALOG_IN_2
+#	else //G_OSD
+#		define RSSI_INPUT ANALOG_IN_3
+#	endif
 #	define RSSI_MAX_VOLTAGE 5.0		//(Max two digits after the dot)
 #	define RSSI_MIN_VOLTAGE 1.5
 #	define RSSI_REVERSED 0			// If a low voltage value means high signal strength and vice versa, then enable this. (Thanks BlueAngel2000)
@@ -224,26 +244,6 @@ Credit to Carl Ljungström.
 
 #define LTRIG (1<<PD2) //INT0
 #define SS (1<<PB2)
-
-//-----------------------------------------------------------------------------
-// ADC
-//-----------------------------------------------------------------------------
-#if defined(E_OSD) || defined(E_OSD_GPS)
-#	define ANALOG_IN_1 1 // Voltage 1				= ADC1
-#	define ANALOG_IN_2 0 // Voltage 2				= ADC0 (can be RSSI)
-#	define ANALOG_IN_3 2 // RSSI / Current Sensor	= ADC2 (0-5 Volt!)
-#	define ANALOG_IN_4 3 // unused
-#else //G_OSD
-#	define ANALOG_IN_1 0 // Voltage 1				= ADC0
-#	define ANALOG_IN_2 1 // Voltage 2				= ADC1
-#	define ANALOG_IN_3 2 // RSSI / Current Sensor	= ADC2 (0-5 Volt!)
-#	define ANALOG_IN_4 3 // unused
-#endif
-
-#define ADC_OFFSET 0
-#define ANALOG_IN_SCALE 31,31,5,5
-
-#define ANALOG_IN_NUMBERS 4
 
 //-----------------------------------------------------------------------------
 // Precalculate limits
