@@ -41,16 +41,16 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #define ALARM_ENABLED
 //#define SENSOR_BATTERY_PERCENTAGE_ENABLED
 //#define SENSOR_COMPASS_ENABLED
-#define SENSOR_RSSI_ENABLED
+//#define SENSOR_RSSI_ENABLED
 //#define SENSOR_CURRENT_ENABLED
-#define STATS_ENABLED
+//#define STATS_ENABLED
 
 //-----------------------------------------------------------------------------
 // GPS - select only one GPS sensor
 //-----------------------------------------------------------------------------
-#define GPS_MTK3229
+//#define GPS_MTK3229
 //#define GPS_NEO6M
-//#define GPS_GOSDII
+#define GPS_GOSDII
 
 //-----------------------------------------------------------------------------
 // GPS messages type (by default NMEA)
@@ -78,7 +78,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #define ALARM_BATT1_LOW 7.50		//Warn if below this level (in volt)
 #define ALARM_BATT2_LOW 7.50		//Warn if below this level (in volt)
 #define ALARM_RSSI_LOW 50			//Warn if below this level (in %)
-#define ALARM_SPEED_HIGH 100		//Warn if above this level (in kmph/mph)
+#define ALARM_SPEED_HIGH 100		//Warn if above this level (in kmh/mph)
 #define ALARM_ALTITUDE_LOW 10		//Warn if below this level (in meters/feet)
 #define ALARM_ALTITUDE_HIGH 1000	//Warn if above this level (in meters/feet)
 #define ALARM_DISTANCE_HIGH 2000	//Warn if below this level (in meters/feet)
