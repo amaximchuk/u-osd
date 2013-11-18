@@ -23,3 +23,11 @@ u-osd_v3.hex:
 - stats enabled
 - no rssi
 - no current
+
+u-osd_v4.hex:
+- PAL
+- GPS baudrate 9600
+- volt 1&2
+- stats enabled
+- no rssi
+- no current
