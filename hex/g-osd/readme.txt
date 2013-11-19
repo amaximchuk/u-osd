@@ -24,6 +24,14 @@ u-osd_v2.hex:
 - no rssi
 - no current
 
+u-osd_v2_pal.hex:
+- NTSC
+- GPS std GOSDII baudrate 4800 (!!zero calibration values)
+- volt 1&2
+- stats enabled
+- no rssi
+- no current
+
 u-osd_v3.hex:
 - NTSC
 - GPS std GOSDII baudrate 4800 (!!zero calibration values)
@@ -38,4 +46,12 @@ u-osd_v4.hex:
 - volt 1&2
 - stats enabled
 - rssi enabled
+- no current
+
+u-osd_v5_pal.hex:
+- PAL
+- GPS baudrate 9600
+- volt 1&2
+- stats enabled
+- no rssi
 - no current
