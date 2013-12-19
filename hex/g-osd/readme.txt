@@ -25,7 +25,7 @@ u-osd_v2.hex:
 - no current
 
 u-osd_v2_pal.hex:
-- NTSC
+- PAL
 - GPS std GOSDII baudrate 4800 (!!zero calibration values)
 - volt 1&2
 - stats enabled
